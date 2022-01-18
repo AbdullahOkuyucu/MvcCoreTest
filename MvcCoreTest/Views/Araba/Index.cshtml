@@ -1,0 +1,44 @@
+﻿@model IEnumerable<ArabaModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<h2>Araba Listesi</h2>
+<hr />
+@Html.ActionLink("Yeni Araba Ekle", "Create", "Araba")
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Adi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UretimYili)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FiyatModel)
+        </th>
+        <th>
+
+        </th>
+    </tr>
+    @foreach (ArabaModel araba in Model)
+    {
+        <tr>
+            <td>
+                @araba.Adi
+            </td>
+            <td>
+                @araba.UretimYili
+            </td>
+            <td>
+                @araba.FiyatModel
+            </td>
+            <td>
+                @Html.ActionLink("Detay", "Details", "Araba", new { id = araba.Id})
+            </td>
+        </tr>
+    }
+
+</table>

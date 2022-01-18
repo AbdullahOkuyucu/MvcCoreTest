@@ -1,0 +1,28 @@
+﻿@model ArabaModel
+@{
+    string title = "Detay";
+    ViewBag.Title = title;
+}
+<h2>@title</h2>
+<hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Adi)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Adi)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UretimYili)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UretimYili)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FiyatModel)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FiyatModel)
+        </dd>
+        
+    </dl>
