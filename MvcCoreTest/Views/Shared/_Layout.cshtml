@@ -24,7 +24,13 @@
                         </li>
                         <li>
                             @Html.ActionLink("Araba Listesi", "Index", "Araba", null, new{@class="nav-link text-dark"})
-                        </li>                       
+                        </li>      
+                        <li>
+                            @Html.ActionLink("Üretici Listesi", "Index", "Ureticis", null, new{@class="nav-link text-dark"})
+                        </li> 
+                        <li>
+                            @Html.ActionLink("Açıklama Listesi", "Index", "Aciklama", null, new{@class="nav-link text-dark"})
+                        </li> 
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Hakkında</a>
                         </li>

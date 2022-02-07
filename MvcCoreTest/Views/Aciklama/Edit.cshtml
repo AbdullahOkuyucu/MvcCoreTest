@@ -1,0 +1,45 @@
+﻿@model AciklamaModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Düzenle</h1>
+
+<h4>Açıklama</h4>
+<hr />
+<form method="post" action="/Aciklama/Edit">
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Detay" class="control-label"></label>
+                <input asp-for="Detay" class="form-control" />
+                <span asp-validation-for="Detay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tarih" class="control-label"></label>
+                <input asp-for="Tarih" class="form-control" />
+                <span asp-validation-for="Tarih" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ArabaId" class="control-label"></label>
+                @*<select asp-for="ArabaId" class="form-control" asp-items="ViewBag.ArabaId"></select>*@
+                <input asp-for="ArabaId" class="form-control" />
+                <span asp-validation-for="ArabaId" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Kaydet" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Açıklama Listesi</a>
+</div>
+</form>
+

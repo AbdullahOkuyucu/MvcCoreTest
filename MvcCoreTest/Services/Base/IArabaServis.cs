@@ -4,10 +4,9 @@ namespace MvcCoreTest.Services.Base
 {
     public interface IArabaServis
     {
-        List<ArabaModel> GetList();
-
-        ArabaModel GetDetails(int id);
-
-        void Add(ArabaModel model);
+        IQueryable<ArabaModel> Query(); 
+        ResultStatus Add(ArabaModel model);
+        ResultStatus Update(ArabaModel model);
+        ResultStatus Delete(int id);
     }
 }

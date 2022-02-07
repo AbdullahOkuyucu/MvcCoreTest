@@ -8,147 +8,138 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MvcCoreTest.Context;
 using MvcCoreTest.Entiti;
+using MvcCoreTest.Models;
+using MvcCoreTest.Services.Base;
 
 namespace MvcCoreTest.Controllers
 {
     public class UreticisController : Controller
     {
-        private readonly ArabaContext _context;
 
-        public UreticisController(ArabaContext context)
+        private readonly IUreticiServis _ureticiServis;
+        private readonly IArabaServis _arabaServis;
+
+        public UreticisController(IUreticiServis ureticiServis, IArabaServis arabaServis)
         {
-            _context = context;
+            _ureticiServis = ureticiServis;
+            _arabaServis = arabaServis;
         }
 
-        // GET: Ureticis
-        public async Task<IActionResult> Index()
+        
+        public IActionResult Index()
         {
-            return View(await _context.Ureticiler.ToListAsync());
+            return View(_ureticiServis.Query().ToList());
         }
 
-        // GET: Ureticis/Details/5
-        public async Task<IActionResult> Details(int? id)
+        
+        public IActionResult Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var uretici = await _context.Ureticiler
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (uretici == null)
-            {
-                return NotFound();
-            }
-
-            return View(uretici);
+            if (!id.HasValue)
+                return View("MyError", "Id Gereklidir!");
+            var model = _ureticiServis.Query().SingleOrDefault(d => d.Id == id.Value);
+            if (model == null)
+                return View("MyError", "Üretici bulunamadı!");
+            return View(model);
         }
 
-        // GET: Ureticis/Create
+        
         public IActionResult Create()
         {
+            //List<SelectListItem> arabaSelectListItems = _ureticiServis.Query().Select(m => new SelectListItem()
+            //{
+            //    Value = m.Id.ToString(),
+            //    Text = m.FirmaAdi
+            //}).ToList();
+            //ViewData["Araba"] = new MultiSelectList(arabaSelectListItems, "Value", "Text");
+
             return View();
         }
 
-        // POST: Ureticis/Create
+        
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirmaAdi,FirmaLokasyon,UretimDurumu")] Uretici uretici)
+        
+        public IActionResult Create(string FirmaAdi, string FirmaLokasyon, bool UretimDurumu)
         {
-            if (ModelState.IsValid)
+            UreticiModel model = new UreticiModel()
             {
-                _context.Add(uretici);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(uretici);
+                FirmaAdi = FirmaAdi,
+                FirmaLokasyon = FirmaLokasyon,
+                UretimDurumu = UretimDurumu
+            };
+            _ureticiServis.Add(model);
+            return RedirectToAction(nameof(Index));           
         }
 
-        // GET: Ureticis/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return View("MyError", "Id Gereklidir!");
             }
-
-            var uretici = await _context.Ureticiler.FindAsync(id);
-            if (uretici == null)
+            var model = _ureticiServis.Query().SingleOrDefault(d => d.Id == id.Value);
+            if (model == null)
             {
-                return NotFound();
-            }
-            return View(uretici);
+                return View("MyError", "Üretici bulunamadı!");
+            };
+            return View(model);
         }
 
-        // POST: Ureticis/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirmaAdi,FirmaLokasyon,UretimDurumu")] Uretici uretici)
+        
+        public IActionResult Edit(UreticiModel uretici)
         {
-            if (id != uretici.Id)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                try
+                var result = _ureticiServis.Update(uretici);
+                if (result == ResultStatus.Success)
                 {
-                    _context.Update(uretici);
-                    await _context.SaveChangesAsync();
+                    TempData["Message"] = "Üretici Güncellendi.";
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
+                if (result == ResultStatus.Exception)
                 {
-                    if (!UreticiExists(uretici.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    return View("MyError");
                 }
+                if (result == ResultStatus.EntityExists)
+                {
+                    ModelState.AddModelError("", "Aynı İsimden Üretici Var!!");
+                }
+            }           
+            return View(uretici);
+        }
+
+       
+        public IActionResult Delete(int? id)
+        {
+            if (!id.HasValue)
+                return View("MyError", "Id Gereklidir!");
+            var model = _ureticiServis.Query().SingleOrDefault(d => d.Id == id.Value);
+            if (model == null)
+                return View("MyError", "Uretici Bulunamadı!");
+            return View(model);
+        }
+
+        // POST: Directors/Delete/5
+        [HttpPost, ActionName("Delete")] 
+        [ValidateAntiForgeryToken]
+        
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var result = _ureticiServis.Delete(id);
+            if (result == ResultStatus.Success)
+            {
+                TempData["Message"] = "Üretici Silindi.";
                 return RedirectToAction(nameof(Index));
             }
-            return View(uretici);
+            return View("MyError"); 
         }
 
-        // GET: Ureticis/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var uretici = await _context.Ureticiler
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (uretici == null)
-            {
-                return NotFound();
-            }
-
-            return View(uretici);
-        }
-
-        // POST: Ureticis/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var uretici = await _context.Ureticiler.FindAsync(id);
-            _context.Ureticiler.Remove(uretici);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool UreticiExists(int id)
-        {
-            return _context.Ureticiler.Any(e => e.Id == id);
-        }
+        
     }
 }

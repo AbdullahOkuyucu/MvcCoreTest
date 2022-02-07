@@ -10,6 +10,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<DbContext, ArabaContext>();
 builder.Services.AddScoped<IArabaServis, ArabaServis>();
+builder.Services.AddScoped<IAciklamaServis, AciklamaServis>();
+builder.Services.AddScoped<IUreticiServis, UreticiServis>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

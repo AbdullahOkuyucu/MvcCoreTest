@@ -1,13 +1,21 @@
 ﻿@model IEnumerable<ArabaModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Araba Listesi";
 }
 
 
-<h2>Araba Listesi</h2>
+<h2>@ViewData["Title"]</h2>
 <hr />
 @Html.ActionLink("Yeni Araba Ekle", "Create", "Araba")
+@if (TempData["Message"] != null)
+{
+    <br />
+    <span class="bg-warning text-black">
+        @TempData["Message"]
+    </span>
+}
+
 <table class="table">
     <tr>
         <th>
@@ -36,7 +44,11 @@
                 @araba.FiyatModel
             </td>
             <td>
-                @Html.ActionLink("Detay", "Details", "Araba", new { id = araba.Id})
+                @Html.ActionLink("Detay", "Details", "Araba", new { id = @araba.Id})
+                &nbsp;|&nbsp;
+                @Html.ActionLink("Düzenle", "Edit", "Araba", new { id = @araba.Id })
+                &nbsp;|&nbsp;
+                @Html.ActionLink("Sil", "Delete", "Araba", new { id = @araba.Id })
             </td>
         </tr>
     }

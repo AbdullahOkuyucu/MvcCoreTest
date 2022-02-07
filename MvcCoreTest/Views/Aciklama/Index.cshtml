@@ -1,26 +1,26 @@
-﻿@model IEnumerable<UreticiModel>
+﻿@model IEnumerable<AciklamaModel>
 
 @{
-    ViewData["Title"] = "Üretici Listesi";
+    ViewData["Title"] = "Açıklama Listesi";
 }
 
 <h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-action="Create">Yeni Üretici Oluştur</a>
+    <a asp-action="Create">Yeni Açıklama Ekle</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirmaAdi)
+                @Html.DisplayNameFor(model => model.Detay)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirmaLokasyon)
+                @Html.DisplayNameFor(model => model.Tarih)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UretimDurumu)
-            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.ArabaId)
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -28,14 +28,14 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.FirmaAdi)
+                @Html.DisplayFor(modelItem => item.Detay)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FirmaLokasyon)
+                @Html.DisplayFor(modelItem => item.Tarih)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UretimDurumu)
-            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.ArabaId)
+            </td>*@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Düzenle</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Detay</a> |

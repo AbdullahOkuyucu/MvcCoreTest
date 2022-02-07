@@ -12,7 +12,7 @@ using MvcCoreTest.Context;
 namespace MvcCoreTest.Migrations
 {
     [DbContext(typeof(ArabaContext))]
-    [Migration("20220115204740_v1")]
+    [Migration("20220205150548_v1")]
     partial class v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -117,6 +117,34 @@ namespace MvcCoreTest.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Ureticiler");
+                });
+
+            modelBuilder.Entity("MvcCoreTest.Models.ArabaModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Adi")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<double?>("Fiyat")
+                        .HasColumnType("float");
+
+                    b.Property<string>("FiyatModel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<short?>("UretimYili")
+                        .HasColumnType("smallint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ArabaModel");
                 });
 
             modelBuilder.Entity("MvcCoreTest.Entiti.Aciklama", b =>

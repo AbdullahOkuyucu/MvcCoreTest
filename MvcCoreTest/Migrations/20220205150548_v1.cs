@@ -25,6 +25,22 @@ namespace MvcCoreTest.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ArabaModel",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Adi = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    UretimYili = table.Column<short>(type: "smallint", nullable: true),
+                    Fiyat = table.Column<double>(type: "float", nullable: true),
+                    FiyatModel = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArabaModel", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Ureticiler",
                 columns: table => new
                 {
@@ -106,6 +122,9 @@ namespace MvcCoreTest.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Aciklamalar");
+
+            migrationBuilder.DropTable(
+                name: "ArabaModel");
 
             migrationBuilder.DropTable(
                 name: "Modellers");
