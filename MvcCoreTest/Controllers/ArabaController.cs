@@ -80,10 +80,10 @@ namespace MvcCoreTest.Controllers
                     return View("MyError");
                 }
             }
-            //ViewBag.Directors = new MultiSelectList(_directorService.Query().ToList(), "Id", "FullNameModel", model.DirectorIdsModel);
+            
             return View(model);
         }
-        public IActionResult Delete(int? id) // ~/Movies/Delete/1
+        public IActionResult Delete(int? id) 
         {
             if (id == null)
                 return View("MyError", "Id Gereklidir");
@@ -98,7 +98,7 @@ namespace MvcCoreTest.Controllers
                 TempData["Message"] = "Detay Olduğu İçin Araba Kaydı Silinemez!";
                 return RedirectToAction(nameof(Index));
             }
-            return View("MyError"); // exception result status
+            return View("MyError"); 
         }
     }
 }

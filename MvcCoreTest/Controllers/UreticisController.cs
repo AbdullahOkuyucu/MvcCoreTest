@@ -45,12 +45,7 @@ namespace MvcCoreTest.Controllers
         
         public IActionResult Create()
         {
-            //List<SelectListItem> arabaSelectListItems = _ureticiServis.Query().Select(m => new SelectListItem()
-            //{
-            //    Value = m.Id.ToString(),
-            //    Text = m.FirmaAdi
-            //}).ToList();
-            //ViewData["Araba"] = new MultiSelectList(arabaSelectListItems, "Value", "Text");
+            
 
             return View();
         }

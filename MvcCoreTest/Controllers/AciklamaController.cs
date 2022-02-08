@@ -18,10 +18,7 @@ namespace MvcCoreTest.Controllers
     {
         private readonly ArabaContext _context;
 
-        //public AciklamaController(ArabaContext context)
-        //{
-        //    _context = context;
-        //}
+        
 
         private readonly IAciklamaServis _aciklamaServis;
         private readonly IArabaServis _arabaServis;
