@@ -11,7 +11,7 @@ namespace MvcCoreTest.Models
 
         [DisplayName("Araba")]
         public int ArabaId { get; set; }
-        public Araba Araba { get; set; }
+        public Araba? Araba { get; set; }
 
         [DisplayName("Tarih")]
         public string? TarihModel { get; set; }

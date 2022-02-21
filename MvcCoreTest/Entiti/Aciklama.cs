@@ -6,6 +6,6 @@
         public string Detay { get; set; }
         public DateTime Tarih { get; set; }
         public int ArabaId { get; set; }
-        public Araba Araba { get; set; }
+        public Araba? Araba { get; set; }
     }
 }

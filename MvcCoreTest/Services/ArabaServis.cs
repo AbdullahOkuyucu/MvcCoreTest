@@ -23,9 +23,7 @@ namespace MvcCoreTest.Services
                 Adi = m.Adi,
                 UretimYili = m.UretimYili,
                 Fiyat = m.Fiyat,
-
-                //FiyatModel = (m.Fiyat ?? 0).ToString("C2", new CultureInfo("en-US"))
-                FiyatModel = m.Fiyat.HasValue ? m.Fiyat.Value.ToString("C2", new CultureInfo("tr-TR")) : "",
+                FiyatModel = m.Fiyat.HasValue ? m.Fiyat.Value.ToString(new CultureInfo("tr-TR")) : "",
             });
         }
 
@@ -75,19 +73,19 @@ namespace MvcCoreTest.Services
                 if (_db.Set<Araba>().Any(m => m.Adi.ToUpper() == model.Adi.ToUpper().Trim() && m.Id != model.Id))
                     return ResultStatus.EntityExists;
 
-                Araba entity = _db.Set<Araba>().Include(m => m.Modeller).SingleOrDefault(m => m.Id == model.Id);
+                Araba entity = _db.Set<Araba>().SingleOrDefault(m => m.Id == model.Id);
 
-                _db.Set<Model>().RemoveRange(entity.Modeller);
+                //_db.Set<Model>().RemoveRange(entity.Modeller);
 
                 entity.Adi = model.Adi.Trim();
                 entity.UretimYili = model.UretimYili;
                 entity.Fiyat = model.Fiyat;
                 if (!string.IsNullOrWhiteSpace(model.FiyatModel))
                 {
-                    double boxOfficeReturn;
-                    if (double.TryParse(model.FiyatModel.Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out boxOfficeReturn))
+                    double fiyat;
+                    if (double.TryParse(model.FiyatModel.Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out fiyat))
                     {
-                        entity.Fiyat = boxOfficeReturn;
+                        entity.Fiyat = fiyat;
                     }
                     else
                     {

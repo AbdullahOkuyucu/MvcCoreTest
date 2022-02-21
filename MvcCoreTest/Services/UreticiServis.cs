@@ -23,7 +23,7 @@ namespace MvcCoreTest.Services
                 FirmaLokasyon = d.FirmaLokasyon,
                 UretimDurumu = d.UretimDurumu,
 
-                Modeller = d.Modeller.Select(md => new ArabaModel() 
+                Modeller = d.Modeller.Select(md => new ArabaModel()
                 {
                     Id = md.Uretici.Id,
                     Adi = md.Uretici.FirmaAdi,
@@ -63,15 +63,10 @@ namespace MvcCoreTest.Services
                 if (_db.Set<Uretici>().Any(d => d.FirmaAdi.ToLower() == model.FirmaAdi.ToLower().Trim() && d.FirmaLokasyon.ToLower() == model.FirmaLokasyon.ToLower().Trim() && d.Id != model.Id))
                     return ResultStatus.EntityExists;
 
-                Uretici entity = _db.Set<Uretici>().Include(d => d.Modeller).SingleOrDefault(d => d.Id == model.Id);
-
-                _db.Set<Model>().RemoveRange(entity.Modeller);
-
+                Uretici entity = _db.Set<Uretici>().SingleOrDefault(d => d.Id == model.Id);
                 entity.FirmaAdi = model.FirmaAdi.Trim();
                 entity.FirmaLokasyon = model.FirmaLokasyon.Trim();
                 entity.UretimDurumu = model.UretimDurumu;
-
-                
 
                 _db.Set<Uretici>().Update(entity);
                 _db.SaveChanges();
@@ -89,7 +84,6 @@ namespace MvcCoreTest.Services
                 Uretici entity = _db.Set<Uretici>().Include(d => d.Modeller).SingleOrDefault(d => d.Id == id);
 
                 _db.Set<Model>().RemoveRange(entity.Modeller);
-
                 _db.Set<Uretici>().Remove(entity);
                 _db.SaveChanges();
                 return ResultStatus.Success;

@@ -43,10 +43,10 @@ namespace MvcCoreTest.Services
             {
                 Aciklama entity = new Aciklama()
                 {
-                    Tarih = DateTime.Parse(model.TarihModel, new CultureInfo("en-US")),
+                    Tarih = model.Tarih,
                     Detay = model.Detay?.Trim(),
-                    ArabaId = model.ArabaId,
-                   
+                    ArabaId = 32, //KULLANICI ARABAYI SEÇMELİ
+
                 };
                 _db.Set<Aciklama>().Add(entity);
                 _db.SaveChanges();
@@ -64,7 +64,7 @@ namespace MvcCoreTest.Services
             {
                 Aciklama entity = _db.Set<Aciklama>().Find(model.Id);
 
-                entity.Tarih = DateTime.Parse(model.TarihModel, new CultureInfo("en-US"));
+                entity.Tarih = model.Tarih;
                 entity.Detay = model.Detay.Trim();
                 entity.ArabaId = model.ArabaId;
 

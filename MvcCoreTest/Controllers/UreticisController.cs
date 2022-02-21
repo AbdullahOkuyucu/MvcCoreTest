@@ -41,20 +41,14 @@ namespace MvcCoreTest.Controllers
                 return View("MyError", "Üretici bulunamadı!");
             return View(model);
         }
-
-        
+       
         public IActionResult Create()
-        {
-            
-
+        {           
             return View();
         }
-
         
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         
         public IActionResult Create(string FirmaAdi, string FirmaLokasyon, bool UretimDurumu)
         {
@@ -74,16 +68,13 @@ namespace MvcCoreTest.Controllers
             {
                 return View("MyError", "Id Gereklidir!");
             }
-            var model = _ureticiServis.Query().SingleOrDefault(d => d.Id == id.Value);
+            UreticiModel model = _ureticiServis.Query().SingleOrDefault(d => d.Id == id.Value);
             if (model == null)
             {
                 return View("MyError", "Üretici bulunamadı!");
             };
             return View(model);
         }
-
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         
@@ -91,7 +82,7 @@ namespace MvcCoreTest.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = _ureticiServis.Update(uretici);
+                ResultStatus result = _ureticiServis.Update(uretici);
                 if (result == ResultStatus.Success)
                 {
                     TempData["Message"] = "Üretici Güncellendi.";
@@ -100,10 +91,6 @@ namespace MvcCoreTest.Controllers
                 if (result == ResultStatus.Exception)
                 {
                     return View("MyError");
-                }
-                if (result == ResultStatus.EntityExists)
-                {
-                    ModelState.AddModelError("", "Aynı İsimden Üretici Var!!");
                 }
             }           
             return View(uretici);
@@ -120,7 +107,6 @@ namespace MvcCoreTest.Controllers
             return View(model);
         }
 
-        // POST: Directors/Delete/5
         [HttpPost, ActionName("Delete")] 
         [ValidateAntiForgeryToken]
         

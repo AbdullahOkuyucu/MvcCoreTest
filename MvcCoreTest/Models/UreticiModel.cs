@@ -14,6 +14,6 @@ namespace MvcCoreTest.Models
 
         [DisplayName("Üretim Durumu")]
         public bool UretimDurumu { get; set; }
-        public List<ArabaModel> Modeller { get; set; }
+        public List<ArabaModel>? Modeller { get; set; }
     }
 }

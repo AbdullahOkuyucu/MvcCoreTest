@@ -11,7 +11,7 @@ namespace MvcCoreTest.Models
         [Required]
         [StringLength(250)]
         [DisplayName("Araba Adı")]
-        public string Adi { get; set; }
+        public string? Adi { get; set; }
 
         [DisplayName("Üretim Yılı")]
         public short? UretimYili { get; set; }
@@ -19,7 +19,7 @@ namespace MvcCoreTest.Models
         public double? Fiyat { get; set; }
 
         [DisplayName("Fiyat")]
-        public string FiyatModel { get; set; }
+        public string? FiyatModel { get; set; }
 
     }
 }
